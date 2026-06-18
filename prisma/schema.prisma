@@ -1,0 +1,23 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Adherente {
+  id               String   @id @default(uuid()) @db.Uuid
+  cedula           String   @unique
+  nombres          String
+  apellidos        String
+  telefono         String
+  estado           String
+  afiliacionTipo   String   @map("afiliacion_tipo")
+  afiliacionNombre String?  @map("afiliacion_nombre")
+  propuesta        String?
+  aceptoTerminos   Boolean  @default(false) @map("acepto_terminos")
+  creadoAt         DateTime @default(now()) @map("creado_at")
+
+  @@map("adherentes")
+}
