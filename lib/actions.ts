@@ -1,16 +1,12 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
-import { adherenteSchema, type ActionResponse } from "@/lib/schemas";
-import { Prisma } from "@prisma/client";
+import { supabaseAdmin } from "@/lib/supabase/server";
+import { adherenteSchema, type AdherenteInput, type ActionResponse } from "@/lib/schemas";
 
 export async function registrarAdherente(
-  _prev: ActionResponse | null,
-  formData: FormData
+  data: AdherenteInput
 ): Promise<ActionResponse> {
-  const raw = Object.fromEntries(formData);
-
-  const parsed = adherenteSchema.safeParse(raw);
+  const parsed = adherenteSchema.safeParse(data);
 
   if (!parsed.success) {
     return {
@@ -19,30 +15,24 @@ export async function registrarAdherente(
     };
   }
 
-  try {
-    await prisma.adherente.create({
-      data: {
-        cedula: parsed.data.cedula.toUpperCase(),
-        nombres: parsed.data.nombres.trim(),
-        apellidos: parsed.data.apellidos.trim(),
-        telefono: parsed.data.telefono.trim(),
-        estado: parsed.data.estado,
-        afiliacionTipo: parsed.data.afiliacionTipo,
-        afiliacionNombre: parsed.data.afiliacionNombre?.trim() || null,
-        propuesta: parsed.data.propuesta?.trim() || null,
-        aceptoTerminos: true,
-      },
-    });
+  const { error } = await supabaseAdmin.from("adherentes").insert({
+    cedula: parsed.data.cedula.toUpperCase(),
+    nombres: parsed.data.nombres.trim(),
+    apellidos: parsed.data.apellidos.trim(),
+    telefono: parsed.data.telefono.trim(),
+    estado: parsed.data.estado,
+    afiliacion_tipo: parsed.data.afiliacionTipo,
+    afiliacion_nombre: parsed.data.afiliacionNombre?.trim() || null,
+    propuesta: parsed.data.propuesta?.trim() || null,
+    acepto_terminos: true,
+  });
 
-    return { success: true };
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        return {
-          success: false,
-          errors: { cedula: ["Esta cédula ya está registrada"] },
-        };
-      }
+  if (error) {
+    if (error.code === "23505") {
+      return {
+        success: false,
+        errors: { cedula: ["Esta cédula ya está registrada"] },
+      };
     }
 
     return {
@@ -50,4 +40,6 @@ export async function registrarAdherente(
       errors: { _form: ["Error al procesar el registro. Intente de nuevo."] },
     };
   }
+
+  return { success: true };
 }

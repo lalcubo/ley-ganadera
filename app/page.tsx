@@ -21,6 +21,7 @@ export default function Home() {
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors },
   } = useForm<AdherenteInput>({
@@ -38,22 +39,13 @@ export default function Home() {
     setPending(true);
     setState(null);
 
-    const formData = new FormData();
-    formData.append("cedula", data.cedula);
-    formData.append("nombres", data.nombres);
-    formData.append("apellidos", data.apellidos);
-    formData.append("telefono", data.telefono);
-    formData.append("estado", data.estado);
-    formData.append("afiliacionTipo", data.afiliacionTipo);
-    if (data.afiliacionNombre) {
-      formData.append("afiliacionNombre", data.afiliacionNombre);
-    }
-    if (data.propuesta) {
-      formData.append("propuesta", data.propuesta);
-    }
-    formData.append("aceptoTerminos", "true");
+    const result = await registrarAdherente(data);
 
-    const result = await registrarAdherente(null, formData);
+    if (result.success) {
+      reset();
+      setTimeout(() => setState(null), 5000);
+    }
+
     setState(result);
     setPending(false);
   });
@@ -98,17 +90,15 @@ export default function Home() {
             Formulario de Adhesión
           </h2>
 
-          {state?.success ? (
-            <div className="rounded-lg bg-green-50 border border-green-200 p-6 text-center">
-              <p className="text-green-800 font-semibold text-lg">
-                ¡Registro exitoso!
-              </p>
-              <p className="text-green-600 mt-1">
-                Su adhesión ha sido registrada correctamente.
+          {state?.success && (
+            <div className="rounded-lg bg-green-50 border border-green-200 p-4 text-center mb-6">
+              <p className="text-green-800 font-semibold">
+                ¡Registro exitoso! La adhesión ha sido registrada.
               </p>
             </div>
-          ) : (
-            <form
+          )}
+
+          <form
               onSubmit={onSubmit}
               className="space-y-5"
               noValidate
@@ -329,7 +319,6 @@ export default function Home() {
                 {pending ? "Registrando..." : "Registrar Adherente"}
               </button>
             </form>
-          )}
         </section>
       </main>
 
