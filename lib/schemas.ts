@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const cedulaRegex = /^[VEJPGvejpg]-\d{7,8}$/;
+const cedulaRegex = /^\d{7,8}$/;
 const soloLetrasRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 const telefonoRegex = /^\+?\d{7,15}$/;
 
@@ -8,7 +8,7 @@ export const adherenteSchema = z.object({
   cedula: z
     .string()
     .min(1, "La cédula es requerida")
-    .regex(cedulaRegex, "Formato: V-12345678 (letra + guión + 7-8 dígitos)"),
+    .regex(cedulaRegex, "Solo números, 7-8 dígitos"),
   nombres: z
     .string()
     .min(2, "Mínimo 2 caracteres")
@@ -28,8 +28,8 @@ export const adherenteSchema = z.object({
     .min(2, "Seleccione un estado")
     .max(50),
   afiliacionTipo: z
-    .enum(["partido", "independiente", "organizacion", "otro"], {
-      error: "Seleccione un tipo de afiliación",
+    .enum(["productor", "asociacion", "profesional", "otro"], {
+      error: "Seleccione una clasificación",
     }),
   afiliacionNombre: z
     .string()

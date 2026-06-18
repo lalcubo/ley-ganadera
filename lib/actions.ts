@@ -16,7 +16,7 @@ export async function registrarAdherente(
   }
 
   const { error } = await supabaseAdmin.from("adherentes").insert({
-    cedula: parsed.data.cedula.toUpperCase(),
+    cedula: parsed.data.cedula,
     nombres: parsed.data.nombres.trim(),
     apellidos: parsed.data.apellidos.trim(),
     telefono: parsed.data.telefono.trim(),
@@ -28,13 +28,6 @@ export async function registrarAdherente(
   });
 
   if (error) {
-    if (error.code === "23505") {
-      return {
-        success: false,
-        errors: { cedula: ["Esta cédula ya está registrada"] },
-      };
-    }
-
     return {
       success: false,
       errors: { _form: ["Error al procesar el registro. Intente de nuevo."] },
