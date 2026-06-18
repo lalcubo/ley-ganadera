@@ -68,6 +68,80 @@ export default function Home() {
       </header>
 
       <main className="flex-1 w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+        <section className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-6 sm:px-10 py-8 sm:py-10 text-white">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/20 shrink-0">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-blue-200">Registro de Adhesión y Propuestas</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold leading-tight mb-3">
+              Introducción al Registro de Adhesión y Propuestas
+            </h2>
+            <p className="text-blue-100 text-sm sm:text-base leading-relaxed">
+              Estimados productores, profesionales y relacionados del sector agroalimentario:
+            </p>
+          </div>
+
+          <div className="px-6 sm:px-10 py-6 sm:py-8 space-y-5 text-sm sm:text-base text-zinc-700 leading-relaxed">
+            <p>
+              Nuestra actividad en el campo es el pilar fundamental del desarrollo económico y la seguridad alimentaria del país. Actualmente, se encuentra bajo debate en la Asamblea Nacional una propuesta de <strong className="text-blue-800">Ley de Protección en la Actividad Ganadera</strong>, una iniciativa impulsada desde las bases de nuestro gremio que ha sido bien acogida por los legisladores y que busca blindar legalmente el esfuerzo de cada uno de nosotros.
+            </p>
+            <p>
+              Para que esta propuesta tenga la fuerza, el eco y la contundencia necesaria ante el parlamento, necesitamos demostrar el respaldo unánime de todo el sector. Esta plataforma ha sido creada precisamente con ese propósito: <strong className="text-blue-800">visibilizar nuestro liderazgo gremial y legitimar el proyecto mediante la unión de voluntades</strong>.
+            </p>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 sm:p-5">
+              <h3 className="font-semibold text-amber-900 text-sm sm:text-base flex items-center gap-2 mb-3">
+                <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+                ¿Quiénes pueden participar?
+              </h3>
+              <p className="text-amber-800 text-sm mb-2">Esta consulta y registro está abierto de forma democrática a todo ciudadano involucrado en la cadena:</p>
+              <ul className="space-y-1.5 text-amber-800 text-sm">
+                {["Ganaderos y productores de pequeña, mediana y gran escala.", "Médicos Veterinarios e Ingenieros de la producción animal.", "Abogados con experiencia en derecho agrario y consultores del área.", "Trabajadores del campo, empresarios agroindustriales y representantes de asociaciones o federaciones gremiales."].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <svg className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-zinc-800 text-sm sm:text-base flex items-center gap-2 mb-3">
+                <svg className="w-5 h-5 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg>
+                Tu participación consta de dos pasos sencillos en este formulario:
+              </h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white text-xs font-bold shrink-0">1</span>
+                    <span className="font-semibold text-blue-800 text-sm">Adhesión Formal</span>
+                  </div>
+                  <p className="text-blue-700 text-sm">Al registrar tus datos básicos, sumas oficialmente tu firma y respaldo al documento introducido ante la Asamblea.</p>
+                </div>
+                <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold shrink-0">2</span>
+                    <span className="font-semibold text-emerald-800 text-sm">Aporte Legislativo</span>
+                  </div>
+                  <p className="text-emerald-700 text-sm">Si consideras que hay puntos críticos que deban incluirse, modificar o fortalecer, dispones de un espacio exclusivo para redactar tus propuestas complementarias, las cuales serán recopiladas por el comité técnico para enriquecer el proyecto de ley.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg p-4 sm:p-5 text-center">
+              <p className="text-white text-sm sm:text-base font-medium">
+                El campo no se detiene, y nuestra defensa jurídica tampoco. Te invitamos a leer la propuesta, plasmar tu firma digital y dejar tus aportes.
+              </p>
+              <p className="text-blue-200 text-base sm:text-lg font-bold mt-1">
+                ¡Tu voz es la fuerza de nuestra ley!
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section className="bg-white rounded-xl shadow-sm border border-zinc-200 p-6 sm:p-8 border-t-4 border-t-blue-600">
           <h2 className="text-lg font-semibold text-zinc-800 mb-4 flex items-center gap-2">
             <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" /></svg>
