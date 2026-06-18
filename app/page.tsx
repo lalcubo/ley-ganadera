@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adherenteSchema, type AdherenteInput, type ActionResponse } from "@/lib/schemas";
@@ -15,25 +14,9 @@ const ESTADOS = [
   "Yaracuy", "Zulia",
 ] as const;
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="w-full rounded-lg bg-primary px-6 py-3 text-white font-semibold transition enabled:hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      {pending ? "Registrando..." : "Registrar Adherente"}
-    </button>
-  );
-}
-
 export default function Home() {
-  const [state, formAction] = useActionState<ActionResponse | null, FormData>(
-    registrarAdherente,
-    null
-  );
+  const [state, setState] = useState<ActionResponse | null>(null);
+  const [pending, setPending] = useState(false);
 
   const {
     register,
@@ -51,9 +34,28 @@ export default function Home() {
   const afiliacionTipo = watch("afiliacionTipo");
   const requireAfiliacionNombre = afiliacionTipo !== "independiente" && afiliacionTipo !== undefined;
 
-  const onSubmit = handleSubmit(() => {
-    const form = document.getElementById("adherente-form") as HTMLFormElement;
-    form.requestSubmit();
+  const onSubmit = handleSubmit(async (data) => {
+    setPending(true);
+    setState(null);
+
+    const formData = new FormData();
+    formData.append("cedula", data.cedula);
+    formData.append("nombres", data.nombres);
+    formData.append("apellidos", data.apellidos);
+    formData.append("telefono", data.telefono);
+    formData.append("estado", data.estado);
+    formData.append("afiliacionTipo", data.afiliacionTipo);
+    if (data.afiliacionNombre) {
+      formData.append("afiliacionNombre", data.afiliacionNombre);
+    }
+    if (data.propuesta) {
+      formData.append("propuesta", data.propuesta);
+    }
+    formData.append("aceptoTerminos", "true");
+
+    const result = await registrarAdherente(null, formData);
+    setState(result);
+    setPending(false);
   });
 
   return (
@@ -107,8 +109,6 @@ export default function Home() {
             </div>
           ) : (
             <form
-              id="adherente-form"
-              action={formAction}
               onSubmit={onSubmit}
               className="space-y-5"
               noValidate
@@ -321,7 +321,13 @@ export default function Home() {
                 </div>
               )}
 
-              <SubmitButton />
+              <button
+                type="submit"
+                disabled={pending}
+                className="w-full rounded-lg bg-primary px-6 py-3 text-white font-semibold transition enabled:hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {pending ? "Registrando..." : "Registrar Adherente"}
+              </button>
             </form>
           )}
         </section>
