@@ -2,6 +2,7 @@
 
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { adherenteSchema, type AdherenteInput, type ActionResponse } from "@/lib/schemas";
+import { enviarCorreoConfirmacion } from "@/lib/email";
 
 export async function registrarAdherente(
   data: AdherenteInput
@@ -20,6 +21,7 @@ export async function registrarAdherente(
     nombres: parsed.data.nombres.trim(),
     apellidos: parsed.data.apellidos.trim(),
     telefono: parsed.data.telefono.trim(),
+    correo: parsed.data.correo.trim(),
     estado: parsed.data.estado,
     afiliacion_tipo: parsed.data.afiliacionTipo,
     afiliacion_nombre: parsed.data.afiliacionNombre?.trim() || null,
@@ -34,5 +36,20 @@ export async function registrarAdherente(
     };
   }
 
+  await enviarCorreoConfirmacion(
+    parsed.data.correo,
+    parsed.data.nombres,
+    parsed.data.apellidos
+  );
+
   return { success: true };
+}
+
+export async function obtenerTotalAdherentes(): Promise<number> {
+  const { count, error } = await supabaseAdmin
+    .from("adherentes")
+    .select("*", { count: "exact", head: true });
+
+  if (error) return 0;
+  return count ?? 0;
 }

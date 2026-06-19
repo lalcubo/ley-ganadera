@@ -23,6 +23,10 @@ export const adherenteSchema = z.object({
     .string()
     .min(1, "El teléfono es requerido")
     .regex(telefonoRegex, "Teléfono inválido. Ej: +584121234567"),
+  correo: z
+    .string()
+    .min(1, "El correo es requerido")
+    .email("Correo electrónico inválido"),
   estado: z
     .string()
     .min(2, "Seleccione un estado")

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adherenteSchema, type AdherenteInput, type ActionResponse } from "@/lib/schemas";
-import { registrarAdherente } from "@/lib/actions";
+import { registrarAdherente, obtenerTotalAdherentes } from "@/lib/actions";
 
 const ESTADOS = [
   "Amazonas", "Anzoátegui", "Apure", "Aragua", "Barinas", "Bolívar",
@@ -17,6 +17,11 @@ const ESTADOS = [
 export default function Home() {
   const [state, setState] = useState<ActionResponse | null>(null);
   const [pending, setPending] = useState(false);
+  const [totalAdherentes, setTotalAdherentes] = useState(0);
+
+  useEffect(() => {
+    obtenerTotalAdherentes().then(setTotalAdherentes);
+  }, []);
 
   const {
     register,
@@ -64,6 +69,10 @@ export default function Home() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" /></svg>
             Registro de Ciudadanos Adherentes
           </p>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm text-blue-100">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+            <span><strong>{totalAdherentes}</strong> adherentes registrados</span>
+          </div>
         </div>
       </header>
 
@@ -394,15 +403,36 @@ export default function Home() {
                     </p>
                   )}
                 </div>
-              </div>
+                </div>
 
-              <div>
-                <label
-                  htmlFor="estado"
-                  className="block text-sm font-medium text-zinc-700 mb-1"
-                >
-                  Estado de residencia
-                </label>
+                <div>
+                  <label
+                    htmlFor="correo"
+                    className="block text-sm font-medium text-zinc-700 mb-1"
+                  >
+                    Correo Electrónico
+                  </label>
+                  <input
+                    id="correo"
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                    {...register("correo")}
+                    className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-zinc-400"
+                  />
+                  {errors.correo && (
+                    <p className="mt-1 text-xs text-red-600">
+                      {errors.correo.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="estado"
+                    className="block text-sm font-medium text-zinc-700 mb-1"
+                  >
+                    Estado de residencia
+                  </label>
                 <select
                   id="estado"
                   {...register("estado")}
