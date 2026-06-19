@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const cedulaRegex = /^\d{7,8}$/;
 const soloLetrasRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-const telefonoRegex = /^\+?\d{7,15}$/;
+const telefonoRegex = /^\+58(4\d{2}|2\d{2})\d{7}$/;
 
 export const adherenteSchema = z.object({
   cedula: z
@@ -34,11 +34,13 @@ export const adherenteSchema = z.object({
   afiliacionNombre: z
     .string()
     .max(100, "Máximo 100 caracteres")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-\.\,\/\(\)]+$/, "Caracteres no permitidos")
     .optional()
     .or(z.literal("")),
   propuesta: z
     .string()
     .max(500, "Máximo 500 caracteres")
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-\.\,\/\?\(\)\:\;\!\@\#\$\%\&\*\=\+\~]*$/, "Caracteres no permitidos")
     .optional()
     .or(z.literal("")),
   aceptoTerminos: z
