@@ -74,12 +74,12 @@ export default function Home() {
           </div>
         </div>
         <section className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-          <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 px-6 sm:px-10 py-8 sm:py-10 text-white">
+          <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 px-6 sm:px-10 py-8 sm:py-10 text-white">
             <div className="flex items-center gap-3 mb-4">
               <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/20 shrink-0">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
               </span>
-              <span className="text-xs font-semibold uppercase tracking-widest text-blue-200">Consulta Nacional Pecuaria</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-emerald-200">Consulta Nacional Pecuaria</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold leading-tight">
               La Consulta Nacional Pecuaria nace para ampliar y nutrir el debate de una ley fundamental para Venezuela.
@@ -156,7 +156,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 rounded-xl p-6 text-white space-y-4 shadow-sm">
+            <div className="bg-gradient-to-r from-emerald-700 via-emerald-800 to-emerald-900 rounded-xl p-6 text-white space-y-4 shadow-sm">
               <p className="text-sm sm:text-base font-medium border-l-4 border-amber-400 pl-3 leading-relaxed">
                 "El campo venezolano no pide privilegios. Pide seguridad para producir, justicia frente al delito, reglas claras, menos trabas y más respeto para quienes sostienen la producción nacional."
               </p>
@@ -174,7 +174,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-lg bg-zinc-100 border border-zinc-200 p-4 text-xs text-zinc-500 leading-relaxed">
-              <strong className="text-zinc-700 block mb-1">Nota institucional:</strong>
+              <strong className="text-zinc-700 block mb-1">Nota:</strong>
               La Consulta Nacional Pecuaria es un espacio abierto, temporal y participativo para recoger adhesiones y aportes en torno al debate legislativo de la Ley de Protección Integral de la Actividad Ganadera. Su propósito es ampliar la participación del sector pecuario y consignar ante la Asamblea Nacional una voz organizada, respetuosa y productiva desde el campo venezolano.
             </div>
           </div>
@@ -705,7 +705,7 @@ export default function Home() {
                   <input
                     id="telefono"
                     type="tel"
-                    placeholder="+584121234567"
+                    placeholder="04121234567"
                     {...register("telefono")}
                     className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-zinc-400"
                   />
@@ -764,7 +764,7 @@ export default function Home() {
                     htmlFor="correo"
                     className="block text-sm font-medium text-zinc-700 mb-1"
                   >
-                    Correo Electrónico
+                    Correo Electrónico <span className="text-zinc-400">(opcional)</span>
                   </label>
                   <input
                     id="correo"
@@ -819,8 +819,12 @@ export default function Home() {
                     className="w-full rounded-lg border border-zinc-300 px-4 py-2.5 text-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:border-zinc-400"
                   >
                     <option value="productor">Productor</option>
-                    <option value="asociacion">Asociación Ganadera</option>
-                    <option value="profesional">Profesional afín</option>
+                    <option value="gremialista">Gremialista</option>
+                    <option value="tecnico">Personal Técnico</option>
+                    <option value="trabajador">Trabajador del campo</option>
+                    <option value="transportista">Transportista</option>
+                    <option value="comerciante">Comerciante</option>
+                    <option value="agroindustrial">Agroindustrial</option>
                     <option value="otro">Otros</option>
                   </select>
                 {errors.afiliacionTipo && (
@@ -883,9 +887,7 @@ export default function Home() {
                   className="mt-1 h-4 w-4 rounded border-zinc-300 text-blue-600 focus:ring-blue-500 accent-blue-600"
                 />
                 <label htmlFor="aceptoTerminos" className="text-sm text-zinc-600">
-                  Acepto los términos y condiciones de la presente iniciativa
-                  legal y manifiesto mi voluntad expresa de adherirme a la
-                  Ley de Ganadería.
+                  Acepto los términos y condiciones de la presente iniciativa y manifiesto mi voluntad expresa de adherirme a la Ley de Proteccion Integral de la Actividad Ganadera.
                 </label>
               </div>
               {errors.aceptoTerminos && (
@@ -905,7 +907,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={pending}
-                className="w-full rounded-lg bg-gradient-to-r from-blue-700 to-blue-600 px-6 py-3 text-white font-semibold shadow-md transition-all duration-200 enabled:hover:from-blue-800 enabled:hover:to-blue-700 enabled:hover:shadow-lg enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg bg-gradient-to-r from-emerald-700 to-emerald-600 px-6 py-3 text-white font-semibold shadow-md transition-all duration-200 enabled:hover:from-emerald-800 enabled:hover:to-emerald-700 enabled:hover:shadow-lg enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {pending ? "Registrando..." : "Registrar Adherente"}
               </button>

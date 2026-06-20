@@ -21,7 +21,7 @@ export async function registrarAdherente(
     nombres: parsed.data.nombres.trim(),
     apellidos: parsed.data.apellidos.trim(),
     telefono: parsed.data.telefono.trim(),
-    correo: parsed.data.correo.trim(),
+    correo: parsed.data.correo?.trim() || null,
     estado: parsed.data.estado,
     afiliacion_tipo: parsed.data.afiliacionTipo,
     afiliacion_nombre: parsed.data.afiliacionNombre?.trim() || null,
@@ -36,11 +36,13 @@ export async function registrarAdherente(
     };
   }
 
-  await enviarCorreoConfirmacion(
-    parsed.data.correo,
-    parsed.data.nombres,
-    parsed.data.apellidos
-  );
+  if (parsed.data.correo && parsed.data.correo.trim() !== "") {
+    await enviarCorreoConfirmacion(
+      parsed.data.correo.trim(),
+      parsed.data.nombres,
+      parsed.data.apellidos
+    );
+  }
 
   return { success: true };
 }

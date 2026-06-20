@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const cedulaRegex = /^\d{7,8}$/;
 const soloLetrasRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-const telefonoRegex = /^\+58(4\d{2}|2\d{2})\d{7}$/;
+const telefonoRegex = /^(?:\+58|0)?(4\d{2}|2\d{2})\d{7}$/;
 
 export const adherenteSchema = z.object({
   cedula: z
@@ -22,17 +22,33 @@ export const adherenteSchema = z.object({
   telefono: z
     .string()
     .min(1, "El teléfono es requerido")
-    .regex(telefonoRegex, "Teléfono inválido. Ej: +584121234567"),
+    .regex(telefonoRegex, "Teléfono inválido. Ej: 04121234567 o 4121234567")
+    .transform((val) => {
+      const clean = val.replace(/\s+/g, ""); // Eliminar espacios si los hubiera
+      if (clean.startsWith("+58")) return clean;
+      if (clean.startsWith("0")) return `+58${clean.slice(1)}`;
+      return `+58${clean}`;
+    }),
   correo: z
     .string()
-    .min(1, "El correo es requerido")
-    .email("Correo electrónico inválido"),
+    .email("Correo electrónico inválido")
+    .optional()
+    .or(z.literal("")),
   estado: z
     .string()
     .min(2, "Seleccione un estado")
     .max(50),
   afiliacionTipo: z
-    .enum(["productor", "asociacion", "profesional", "otro"], {
+    .enum([
+      "productor",
+      "gremialista",
+      "tecnico",
+      "trabajador",
+      "transportista",
+      "comerciante",
+      "agroindustrial",
+      "otro",
+    ], {
       error: "Seleccione una clasificación",
     }),
   afiliacionNombre: z
