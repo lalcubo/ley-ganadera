@@ -1,6 +1,12 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export async function enviarCorreoConfirmacion(
   correo: string,
@@ -8,8 +14,8 @@ export async function enviarCorreoConfirmacion(
   apellidos: string
 ): Promise<boolean> {
   try {
-    await resend.emails.send({
-      from: "Registro Ley Ganadera <onboarding@resend.dev>",
+    await transporter.sendMail({
+      from: `"Registro Ley Ganadera" <${process.env.SMTP_USER}>`,
       to: correo,
       subject: "Gracias por sumarte a la Consulta Nacional Pecuaria",
       html: `
@@ -79,7 +85,8 @@ export async function enviarCorreoConfirmacion(
       `,
     });
     return true;
-  } catch {
+  } catch (error) {
+    console.error("Error al enviar correo con Gmail:", error);
     return false;
   }
 }
