@@ -896,6 +896,16 @@ export default function Home() {
                 </p>
               )}
 
+              <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800 flex items-start gap-2.5">
+                <svg className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                  <span className="font-bold block text-amber-900">Aviso importante sobre el correo de confirmación:</span>
+                  Al registrarte te enviaremos un correo. Si no lo recibes en unos minutos, **revisa tu carpeta de Correo no deseado / Spam** y márcalo como **"No es spam"** para seguir recibiendo información del proceso.
+                </div>
+              </div>
+
               {state?.errors?._form && (
                 <div className="rounded-lg bg-red-50 border border-red-200 p-3">
                   <p className="text-sm text-red-700">
