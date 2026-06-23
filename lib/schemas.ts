@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const cedulaRegex = /^\d{7,8}$/;
+const cedulaRegex = /^\d{6,8}$/;
 const soloLetrasRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
 const telefonoRegex = /^(?:\+58|0)?(4\d{2}|2\d{2})\d{7}$/;
 
@@ -8,7 +8,7 @@ export const adherenteSchema = z.object({
   cedula: z
     .string()
     .min(1, "La cédula es requerida")
-    .regex(cedulaRegex, "Solo números, 7-8 dígitos"),
+    .regex(cedulaRegex, "Solo números, 6-8 dígitos"),
   nombres: z
     .string()
     .min(2, "Mínimo 2 caracteres")
