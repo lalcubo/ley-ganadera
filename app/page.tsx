@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { adherenteSchema, type AdherenteInput, type ActionResponse } from "@/lib/schemas";
 import { registrarAdherente, obtenerTotalAdherentes } from "@/lib/actions";
+import PropuestasSection from "@/app/components/PropuestasSection";
 
 const ESTADOS = [
   "Amazonas", "Anzoátegui", "Apure", "Aragua", "Barinas", "Bolívar",
@@ -18,6 +19,7 @@ export default function Home() {
   const [state, setState] = useState<ActionResponse | null>(null);
   const [pending, setPending] = useState(false);
   const [totalAdherentes, setTotalAdherentes] = useState(0);
+  const [refreshPropuestas, setRefreshPropuestas] = useState(0);
 
   useEffect(() => {
     obtenerTotalAdherentes().then(setTotalAdherentes);
@@ -48,6 +50,8 @@ export default function Home() {
 
     if (result.success) {
       reset();
+      obtenerTotalAdherentes().then(setTotalAdherentes);
+      setRefreshPropuestas((prev) => prev + 1);
       setTimeout(() => setState(null), 5000);
     }
 
@@ -923,6 +927,8 @@ export default function Home() {
               </button>
             </form>
         </section>
+
+        <PropuestasSection refreshTrigger={refreshPropuestas} />
       </main>
 
       <footer className="w-full bg-zinc-950 mt-8 overflow-hidden shadow-inner">
